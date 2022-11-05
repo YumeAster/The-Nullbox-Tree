@@ -51,6 +51,20 @@ addLayer("w", {
             unlocked(){
                 return hasUpgrade('w', 12)
             }
+        },
+        14: {
+            title: "Autocomplete",
+            description: "Word boost Character generation.",
+            cost: new Decimal(50),
+            unlocked(){
+                return hasUpgrade('w', 13)
+            },
+            effect() {
+                let eff = player['w'].points.plus(1).pow(0.4);
+                
+                return eff;
+            },
+            effectDisplay(){ return format(upgradeEffect('w', 14)) + "x"; }
         }
     }
 })
