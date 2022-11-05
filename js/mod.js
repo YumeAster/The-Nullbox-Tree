@@ -3,7 +3,7 @@ let modInfo = {
 	id: "nbx",
 	author: "NepleDev",
 	pointsName: "characters",
-	modFiles: ["./layers/line01/word.js", "tree.js"],
+	modFiles: ["layer.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -38,6 +38,8 @@ function canGenPoints(){
 
 // Calculate points/sec!
 function getPointGen() {
+	let isDev = false;
+
 	if(!canGenPoints())
 		return new Decimal(0)
 
@@ -47,6 +49,8 @@ function getPointGen() {
 	let gain = new Decimal(1)
 	if(hasUpgrade('w', 12)) gain = gain.times(2) // Fast Typing
 	if(hasUpgrade('w', 14)) gain = gain.times(upgradeEffect('w', 14)); // Autocomplete
+
+	if(isDev) gain = gain.times(100);
 
 	return gain
 }

@@ -15,6 +15,8 @@ addLayer("w", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
+        best: new Decimal(0),
+        total: new Decimal(0)
     }},
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
