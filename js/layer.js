@@ -132,7 +132,7 @@ addLayer("c", {
                 return player.c.unlocked;
             },
             effect() {
-                let eff = player.c.points.plus(1).pow(0.5);
+                let eff = player.c.points.plus(1).pow(0.6);
                 
                 return eff;
             },
@@ -146,7 +146,7 @@ addLayer("c", {
                 return hasUpgrade('c', 11);
             },
             effect(){
-                let eff = player.c.points.plus(1).pow(0.2);
+                let eff = player.c.points.plus(1).pow(0.4);
 
                 return eff;
             }
