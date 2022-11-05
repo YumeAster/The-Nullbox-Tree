@@ -132,7 +132,7 @@ addLayer("c", {
                 return player.c.unlocked;
             },
             effect() {
-                let eff = player.c.points.plus(1).pow(0.6);
+                let eff = player.c.points.plus(2).pow(0.5);
                 
                 return eff;
             },
@@ -146,10 +146,11 @@ addLayer("c", {
                 return hasUpgrade('c', 11);
             },
             effect(){
-                let eff = player.c.points.plus(1).pow(0.4);
+                let eff = player.c.points.plus(2).pow(0.3);
 
                 return eff;
-            }
+            },
+            effectDisplay(){ return format(upgradeEffect('c', 12)) + "x"; }
         }
     }
 })
