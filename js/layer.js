@@ -22,6 +22,7 @@ addLayer("w", {
         mult = new Decimal(1)
         if(hasUpgrade('w', 13)) mult = mult.times(2)
         if(player.c.unlocked) mult = mult.times(tmp.c.effect);
+        if(hasUpgrade('c', 12)) mult = mult.times(upgradeEffect('c', 12));
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -123,6 +124,32 @@ addLayer("c", {
     },
 
     upgrades: {
+        11: {
+            title: "Hello!",
+            description: "Chat boost your Character generation.",
+            cost: new Decimal(2),
+            unlocked(){
+                return player.c.unlocked;
+            },
+            effect() {
+                let eff = player.c.points.plus(1).pow(0.5);
+                
+                return eff;
+            },
+            effectDisplay(){ return format(upgradeEffect('c', 11)) + "x"; }
+        },
+        12: {
+            title: "#general",
+            description: "Chat boost your Word generation.",
+            cost: new Decimal(3),
+            unlocked(){
+                return hasUpgrade('c', 11);
+            },
+            effect(){
+                let eff = player.c.points.plus(1).pow(0.2);
 
+                return eff;
+            }
+        }
     }
 })

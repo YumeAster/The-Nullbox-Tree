@@ -49,6 +49,7 @@ function getPointGen() {
 	let gain = new Decimal(1)
 	if(hasUpgrade('w', 12)) gain = gain.times(2) // Fast Typing
 	if(hasUpgrade('w', 14)) gain = gain.times(upgradeEffect('w', 14)); // Autocomplete
+	if(hasUpgrade('c', 11)) gain = gain.times(upgradeEffect('c', 11)); // Hello!
 
 	if(isDev) gain = gain.times(100);
 
