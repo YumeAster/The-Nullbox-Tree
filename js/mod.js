@@ -1,28 +1,27 @@
 let modInfo = {
-	name: "The ??? Tree",
-	id: "mymod",
-	author: "nobody",
-	pointsName: "points",
-	modFiles: ["layers.js", "tree.js"],
+	name: "The Nullbox Tree",
+	id: "nbx",
+	author: "NepleDev",
+	pointsName: "characters",
+	modFiles: ["./layers/line01/word.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal(2), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1-Dev",
+	name: "Developing...",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v0.1-Dev</h3><br>
+		- Just Dev Version.<br>`
 
-let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
+let winText = `Congratulation! You finally win NORAN MINUS`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
@@ -42,7 +41,12 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
+	if(!hasUpgrade('w', 11))
+		return new Decimal(0)
+
 	let gain = new Decimal(1)
+	if(hasUpgrade('w', 12)) gain = gain.times(2) // Fast Typing
+
 	return gain
 }
 
