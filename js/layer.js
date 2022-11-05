@@ -82,7 +82,7 @@ addLayer("c", {
     resource: "Chat", // Name of prestige currency
 
     baseResource: "Word", // Name of resource prestige is based on
-    baseAmount() { return player.points }, // 기본적으로 해당 레이어에 보여질 재화 식
+    baseAmount() { return player.w.points }, // 기본적으로 해당 레이어에 보여질 재화 식
 
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     requires: new Decimal(100), // 1개의 재화를 얻는 데 드는 양 (해금하는 양도 포함)
