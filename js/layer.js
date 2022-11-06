@@ -60,7 +60,7 @@ addLayer("w", {
         13: {
             title: "Mechanical Keyboard",
             description: "Double your word gain.",
-            cost: new Decimal(15),
+            cost: new Decimal(10),
             unlocked(){
                 return hasUpgrade('w', 12)
             }
@@ -68,15 +68,15 @@ addLayer("w", {
         14: {
             title: "Autocomplete",
             description: "Word boost Character generation.",
-            cost: new Decimal(25),
+            cost: new Decimal(20),
             unlocked(){
                 return hasUpgrade('w', 13)
             },
             effect() {
                 let eff = player['w'].points.plus(1)
-                let exp = new Decimal(0.2)
+                let exp = new Decimal(0.25)
 
-                if(hasUpgrade('w', 22)) exp = new Decimal(0.3)
+                if(hasUpgrade('w', 22)) exp = new Decimal(0.5)
                 
                 eff = eff.pow(exp);
                 return eff;
@@ -93,7 +93,7 @@ addLayer("w", {
         },
         22: {
             title: "AI-Base Autocomplete",
-            description: "Change Exponent of <b>Autocomplete</b> 0.2 -> 0.3",
+            description: "Change Exponent of <b>Autocomplete</b> 0.25 -> 0.5",
             cost: new Decimal(5000),
             unlocked() {
                 return hasUpgrade('c', 13)
@@ -115,7 +115,7 @@ addLayer("c", {
     baseAmount() { return player.w.points }, // 기본적으로 해당 레이어에 보여질 재화 식
 
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    requires: new Decimal(100), // 1개의 재화를 얻는 데 드는 양 (해금하는 양도 포함)
+    requires: new Decimal(50), // 1개의 재화를 얻는 데 드는 양 (해금하는 양도 포함)
     exponent: 1.05, // Prestige currency exponent
 
     startData() { return {
@@ -161,7 +161,7 @@ addLayer("c", {
                 return player.c.unlocked;
             },
             effect() {
-                let eff = player.c.points.plus(2).pow(0.66);
+                let eff = player.c.points.plus(4).pow(0.66);
                 
                 return eff;
             },
