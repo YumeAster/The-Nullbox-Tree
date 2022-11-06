@@ -52,7 +52,7 @@ addLayer("w", {
             cost: new Decimal(1)
         },
         12: {
-            title: "Fast Typing",
+            title: "Typing",
             description: "Double your character gain.",
             cost: new Decimal(5),
             unlocked(){
@@ -68,7 +68,7 @@ addLayer("w", {
             }
         },
         14: {
-            title: "Autocomplete",
+            title: "Typing Practice",
             description: "Word boost Character generation.",
             cost: new Decimal(20),
             unlocked(){
@@ -86,7 +86,7 @@ addLayer("w", {
             effectDisplay(){ return format(upgradeEffect('w', 14)) + "x"; }
         },
         21: {
-            title: "Too Many Welcomes",
+            title: "Fast Typing",
             description: "Double your word gain, again.",
             cost: new Decimal(1000),
             unlocked() {
@@ -94,15 +94,15 @@ addLayer("w", {
             }
         },
         22: {
-            title: "AI-Base Autocomplete",
-            description: "Change Exponent of <b>Autocomplete</b> 0.25 -> 0.5",
+            title: "Typing Master",
+            description: "Change Exponent of <b>Typing Practice</b> 0.25 -> 0.5",
             cost: new Decimal(5000),
             unlocked() {
                 return hasUpgrade('c', 13)
             }
         },
         23: {
-            title: "Typing Practice",
+            title: "Big Data",
             description: "Character generation is faster based on your Word upgrade bought.",
             cost: new Decimal(7.5e4),
             unlocked(){
@@ -162,6 +162,8 @@ addLayer("c", {
 
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if(hasUpgrade('c', 22)) mult = mult.div(upgradeEffect('c', 22));
+
         return mult
     },
 
@@ -177,10 +179,12 @@ addLayer("c", {
         return hasUpgrade('w', 11) || player.c.unlocked;
     },
 
+    canBuyMax(){ return hasMilestone('c', 2) }, 
+
     effect(){
         let eff = new Decimal(1.125).pow(player.c.points)
 
-        eff = eff.times(upgradeEffect('c', 14))
+        eff = eff.times(upgradeEffect('c', 21))
         
         return eff;
     },
@@ -191,7 +195,7 @@ addLayer("c", {
 
     upgrades: {
         11: {
-            title: "Hello!",
+            title: "#general",
             description: "Chat boost your Character generation.",
             cost: new Decimal(2),
             unlocked(){
@@ -205,15 +209,19 @@ addLayer("c", {
             effectDisplay(){ return format(upgradeEffect('c', 11)) + "x"; }
         },
         12: {
-            title: "#general",
+            title: "Autocomplete",
             description: "Chat boost your Word generation.",
             cost: new Decimal(3),
             unlocked(){
                 return hasUpgrade('c', 11);
             },
             effect(){
-                let eff = player.c.points.plus(2).pow(0.66);
+                let eff = player.c.points.plus(2)
+                let exp = new Decimal(0.66)
+                
+                if(hasUpgrade('c', 23)) exp = new Decimal(0.75)
 
+                eff = eff.pow(exp)
                 return eff;
             },
             effectDisplay(){ return format(upgradeEffect('c', 12)) + "x"; }
@@ -226,7 +234,7 @@ addLayer("c", {
                 return hasUpgrade('c', 12);
             }
         },
-        14: {
+        21: {
             title: "Fimally!",
             description: "Best Chats boost Chat effect",
             cost: new Decimal(11),
@@ -238,7 +246,29 @@ addLayer("c", {
 
                 return eff;
             },
-            effectDisplay(){ return format(upgradeEffect('c', 14)) + "x" }
+            effectDisplay(){ return format(upgradeEffect('c', 21)) + "x" }
+        },
+        22: {
+            title: "Discord Nitro",
+            description: "Chats are cheaper based on your characters.",
+            cost: new Decimal(16),
+            effect(){
+                let eff = player.points.add(1).log(10).add(1).pow(2.75)
+
+                return eff
+            },
+            effectDisplay(){ return "/" + format(upgradeEffect('c', 22))},
+            unlocked(){
+                return hasUpgrade('c', 13)
+            }
+        },
+        23: {
+            title: "AI-Base Autocomplete",
+            description: "Change Exponent of <b>Autocomplete</b> 0.66 -> 0.75",
+            cost: new Decimal(21),
+            unlocked(){
+                return hasUpgrade('c', 13)
+            }
         }
     },
 
@@ -253,6 +283,12 @@ addLayer("c", {
             requirementDescription: "13 Chats",
             done() { return player.c.best.gte(13) },
             effectDescription: "Gain 50% of Word every second.",
+            unlocked(){ return player.c.unlocked; }
+        },
+        2: {
+            requirementDescription: "20 Chats",
+            done() {return player.c.best.gte(20) },
+            effectDescription: "You can buy max Chats.",
             unlocked(){ return player.c.unlocked; }
         }
     }
