@@ -1,9 +1,13 @@
 addLayer("w", {
     name: "Word", 
     symbol: "W", 
+    row: 0, // Row the layer is in on the tree (0 is the first row)
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     color: "#c2c2c2",
     resource: "Word", // Name of prestige currency
+    hotkeys: [
+        {key: "w", description: "W: Reset for Word", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
 
     baseResource: "characters", // Name of resource prestige is based on
     baseAmount() { return player.points }, // 기본적으로 해당 레이어에 보여질 재화 식
@@ -37,11 +41,9 @@ addLayer("w", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 0, // Row the layer is in on the tree (0 is the first row)
-    hotkeys: [
-        {key: "m", description: "M: Reset for Mute Points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
-    ],
-    layerShown(){return true},
+    layerShown(){ return true },
+
+    passiveGeneration() { return hasMilestone("c", 1) ? 0.5 : 0},
 
     upgrades: {
         11: {
@@ -98,6 +100,35 @@ addLayer("w", {
             unlocked() {
                 return hasUpgrade('c', 13)
             }
+        },
+        23: {
+            title: "Typing Practice",
+            description: "Character generation is faster based on your Word upgrade bought.",
+            cost: new Decimal(7.5e4),
+            unlocked(){
+                return hasUpgrade('c', 13)
+            },
+            effect() {
+                let eff = new Decimal(1.5)
+                eff = eff.pow(player.w.upgrades.length)
+                
+                return eff
+            },
+            effectDisplay() { return format(upgradeEffect('w', 23)) + "x" }
+        },
+        24: {
+            title: "Selfmade Disaster",
+            description: "Character boost their own generation.",
+            cost: new Decimal(1.5e5),
+            unlocked(){
+                return hasUpgrade('c', 13)
+            },
+            effect() {
+                let eff = player.points.plus(1).log10().pow(0.8).plus(1)
+                
+                return eff
+            },
+            effectDisplay(){ return format(upgradeEffect('w', 24)) + "x" }
         }
     }
 })
@@ -116,7 +147,11 @@ addLayer("c", {
 
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     requires: new Decimal(50), // 1개의 재화를 얻는 데 드는 양 (해금하는 양도 포함)
-    exponent: 1.05, // Prestige currency exponent
+    exponent() {
+        let exp = new Decimal(1.05);
+        if(player.c.points.gte(new Decimal(10))) exp = new Decimal(1.12);
+        return exp;
+    }, // Prestige currency exponent
 
     startData() { return {
         unlocked: false,
@@ -143,8 +178,10 @@ addLayer("c", {
     },
 
     effect(){
-        let eff = new Decimal(1.125);
-        eff = eff.pow(player.c.points)
+        let eff = new Decimal(1.125).pow(player.c.points)
+
+        eff = eff.times(upgradeEffect('c', 14))
+        
         return eff;
     },
 
@@ -183,11 +220,25 @@ addLayer("c", {
         },
         13: {
             title: "Additional Keyboard",
-            description: "Unlock 4 new Word upgrade.",
+            description: "Unlock 4 new Word upgrades.",
             cost: new Decimal(5),
             unlocked(){
                 return hasUpgrade('c', 12);
             }
+        },
+        14: {
+            title: "Fimally!",
+            description: "Best Chats boost Chat effect",
+            cost: new Decimal(11),
+            unlocked(){
+                return hasUpgrade('c', 13);
+            },
+            effect(){
+                let eff = player.c.best.plus(1).pow(0.2)
+
+                return eff;
+            },
+            effectDisplay(){ return format(upgradeEffect('c', 14)) + "x" }
         }
     },
 
@@ -196,6 +247,12 @@ addLayer("c", {
             requirementDescription: "5 Chats",
             done(){ return player.c.best.gte(5) },
             effectDescription: "Keep Word Upgrades on reset.",
+            unlocked(){ return player.c.unlocked; }
+        },
+        1: {
+            requirementDescription: "13 Chats",
+            done() { return player.c.best.gte(13) },
+            effectDescription: "Gain 50% of Word every second.",
             unlocked(){ return player.c.unlocked; }
         }
     }
