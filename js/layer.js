@@ -12,6 +12,12 @@ addLayer("w", {
     requires: new Decimal(2), // 1개의 재화를 얻는 데 드는 양 (해금하는 양도 포함)
     exponent: 0.5, // Prestige currency exponent
 
+    doReset(resettingLayer) {
+        let keep = [];
+        if (hasMilestone("c", 0) && resettingLyaer == "c") keep.push("upgrades");
+        if (layers[resettingLayer].row > this.row) layerDataReset("w", keep)
+    },
+
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
@@ -64,7 +70,7 @@ addLayer("w", {
                 return hasUpgrade('w', 13)
             },
             effect() {
-                let eff = player['w'].points.plus(1).pow(0.4);
+                let eff = player['w'].points.plus(1).pow(0.75);
                 
                 return eff;
             },
@@ -87,7 +93,7 @@ addLayer("c", {
 
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     requires: new Decimal(100), // 1개의 재화를 얻는 데 드는 양 (해금하는 양도 포함)
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 1.25, // Prestige currency exponent
 
     startData() { return {
         unlocked: false,
@@ -114,7 +120,7 @@ addLayer("c", {
     },
 
     effect(){
-        let eff = new Decimal(1.05);
+        let eff = new Decimal(1.125);
         eff = eff.pow(player.c.points)
         return eff;
     },
@@ -132,7 +138,7 @@ addLayer("c", {
                 return player.c.unlocked;
             },
             effect() {
-                let eff = player.c.points.plus(2).pow(0.5);
+                let eff = player.c.points.plus(2).pow(0.66);
                 
                 return eff;
             },
@@ -146,11 +152,20 @@ addLayer("c", {
                 return hasUpgrade('c', 11);
             },
             effect(){
-                let eff = player.c.points.plus(2).pow(0.3);
+                let eff = player.c.points.plus(2).pow(0.66);
 
                 return eff;
             },
             effectDisplay(){ return format(upgradeEffect('c', 12)) + "x"; }
+        }
+    },
+
+    milestones: {
+        0: {
+            requirementDescription: "5 Chats",
+            done(){ return player.c.best.gte(5) },
+            effectDescription: "Keep Word Upgrades on reset.",
+            unlocked(){ return player.c.unlocked; }
         }
     }
 })
