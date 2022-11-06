@@ -73,8 +73,12 @@ addLayer("w", {
                 return hasUpgrade('w', 13)
             },
             effect() {
-                let eff = player['w'].points.plus(1).pow(0.75);
+                let eff = player['w'].points.plus(1)
+                let exp = new Decimal(0.2)
+
+                if(hasUpgrade('w', 22)) exp = new Decimal(0.3)
                 
+                eff = eff.pow(exp);
                 return eff;
             },
             effectDisplay(){ return format(upgradeEffect('w', 14)) + "x"; }
@@ -82,11 +86,19 @@ addLayer("w", {
         21: {
             title: "Too Many Welcomes",
             description: "Double your word gain, again.",
-            cost: new Decimal(10000),
+            cost: new Decimal(1000),
             unlocked() {
                 return hasUpgrade('c', 13)
             }
         },
+        22: {
+            title: "AI-Base Autocomplete",
+            description: "Change Exponent of <b>Autocomplete</b> 0.2 -> 0.3",
+            cost: new Decimal(5000),
+            unlocked() {
+                return hasUpgrade('c', 13)
+            }
+        }
     }
 })
 
@@ -104,7 +116,7 @@ addLayer("c", {
 
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     requires: new Decimal(100), // 1개의 재화를 얻는 데 드는 양 (해금하는 양도 포함)
-    exponent: 1.25, // Prestige currency exponent
+    exponent: 1.05, // Prestige currency exponent
 
     startData() { return {
         unlocked: false,
