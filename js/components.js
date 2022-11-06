@@ -178,8 +178,8 @@ function loadVue() {
 			<span v-else>
 				<span v-if= "tmp[layer].upgrades[data].title"><h3 v-html="tmp[layer].upgrades[data].title"></h3><br></span>
 				<span v-html="tmp[layer].upgrades[data].description"></span>
-				<span v-if="layers[layer].upgrades[data].effectDisplay"><br>{langData[options.lang].system.normal.currently}: <span v-html="run(layers[layer].upgrades[data].effectDisplay, layers[layer].upgrades[data])"></span></span>
-				<br><br>{langData[options.lang].system.upgrade.cost}: {{ formatWhole(tmp[layer].upgrades[data].cost) }} {{(tmp[layer].upgrades[data].currencyDisplayName ? tmp[layer].upgrades[data].currencyDisplayName : tmp[layer].resource)}}
+				<span v-if="layers[layer].upgrades[data].effectDisplay"><br>{{langData[options.lang].system.normal.currently}}: <span v-html="run(layers[layer].upgrades[data].effectDisplay, layers[layer].upgrades[data])"></span></span>
+				<br><br>{{langData[options.lang].system.upgrade.cost}}: {{ formatWhole(tmp[layer].upgrades[data].cost) }} {{(tmp[layer].upgrades[data].currencyDisplayName ? tmp[layer].upgrades[data].currencyDisplayName : tmp[layer].resource)}}
 			</span>
 			<tooltip v-if="tmp[layer].upgrades[data].tooltip" :text="tmp[layer].upgrades[data].tooltip"></tooltip>
 
@@ -236,7 +236,7 @@ function loadVue() {
 	Vue.component('main-display', {
 		props: ['layer', 'data'],
 		template: `
-		<div><span v-if="player[layer].points.lt('1e1000')">{{langData[options.lang].system.normal.baseAmount}} </span><h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{data ? format(player[layer].points, data) : formatWhole(player[layer].points)}}</h2> {{tmp[layer].resource + langData[options.lang].system.normal.baseAmountAfter}}<span v-if="layers[layer].effectDescription">, <span v-html="run(layers[layer].effectDescription, layers[layer])"></span></span><br><br></div>
+		<div><span v-if="player[layer].points.lt('1e1000')">{{langData[options.lang].system.normal.baseAmount}} </span><h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{data ? format(player[layer].points, data) : formatWhole(player[layer].points)}}</h2> {{tmp[layer].resource + langData[options.lang].system.normal.baseAmountAfter}}<span v-if="layers[layer].effectDescription">{{langData[options.lang].system.normal.aboveBaseEffect}} <span v-html="run(layers[layer].effectDescription, layers[layer])"></span></span><br><br></div>
 		`
 	})
 
@@ -245,11 +245,11 @@ function loadVue() {
 		props: ['layer'],
 		template: `
 		<div style="margin-top: -13px">
-			<span v-if="tmp[layer].baseAmount"><br>{{langData[options.lang].system.normal.baseAmount}} {{formatWhole(tmp[layer].baseAmount)}} {{tmp[layer].baseResource}} {{langData[options.lang].system.normal.baseAmountAfter}}</span>
-			<span v-if="tmp[layer].passiveGeneration"><br>{{langData[options.lang].system.normal.passiveGen}} {{format(tmp[layer].resetGain.times(tmp[layer].passiveGeneration))}} {{tmp[layer].resource}} {{langData[options.lang].system.normal.passiveGenPerSecond}} {{langData[options.lang].system.normal.passiveGenAfter}}</span>
+			<span v-if="tmp[layer].baseAmount"><br>{{langData[options.lang].system.normal.baseAmount}} <b>{{formatWhole(tmp[layer].baseAmount)}}</b> {{tmp[layer].baseResource + (langData[options.lang].postposition ? tmp[layer].objectivePostposition : "") + langData[options.lang].system.normal.baseAmountAfter}}</span>
+			<span v-if="tmp[layer].passiveGeneration"><br>{{langData[options.lang].system.normal.passiveGen}} <b>{{format(tmp[layer].resetGain.times(tmp[layer].passiveGeneration))}}</b> {{tmp[layer].resource + (langData[options.lang].postposition ? tmp[layer].objectivePostposition : "") + langData[options.lang].system.normal.passiveGenPerSecond + langData[options.lang].system.normal.passiveGenAfter}}</span>
 			<br><br>
-			<span v-if="tmp[layer].showBest">{{langData[options.lang].system.normal.best}} {{tmp[layer].resource + langData[options.lang].system.normal.bestIs}} {{formatWhole(player[layer].best)}} {{langData[options.lang].system.normal.bestAfter}}<br></span>
-			<span v-if="tmp[layer].showTotal">{{langData[options.lang].system.normal.total}} {{formatWhole(player[layer].total)}} {{tmp[layer].resource}} {{langData[options.lang].system.normal.totalAfter}}<br></span>
+			<span v-if="tmp[layer].showBest">{{langData[options.lang].system.normal.best}} {{tmp[layer].resource + langData[options.lang].system.normal.bestIs}}<b> {{formatWhole(player[layer].best)}}</b>{{langData[options.lang].system.normal.bestAfter}}<br></span>
+			<span v-if="tmp[layer].showTotal">{{langData[options.lang].system.normal.total}} <b>{{formatWhole(player[layer].total)}}</b> {{tmp[layer].resource + (langData[options.lang].postposition ? tmp[layer].objectivePostposition : "") +  langData[options.lang].system.normal.totalAfter}}<br><br></span>
 		</div>
 		`
 	})
@@ -370,7 +370,7 @@ function loadVue() {
 		props: ['layer', 'data'],
 		template: `
 		<button v-if="tmp[layer].clickables && tmp[layer].clickables.masterButtonPress && !(tmp[layer].clickables.showMasterButton !== undefined && tmp[layer].clickables.showMasterButton == false)"
-			v-on:click="run(tmp[layer].clickables.masterButtonPress, tmp[layer].clickables)" v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }">{{tmp[layer].clickables.masterButtonText ? tmp[layer].clickables.masterButtonText : "Click me!"}}</button>
+			v-on:click="run(tmp[layer].clickables.masterButtonPress, tmp[layer].clickables)" v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }">{{tmp[layer].clickables.masterButtonText ? tmp[layer].clickables.masterButtonText : langData[options.lang].system.normal.buttonDefault}}</button>
 	`
 	})
 
@@ -486,8 +486,8 @@ function loadVue() {
 		<div v-if="tmp[layer].achievements && tmp[layer].achievements[data]!== undefined && tmp[layer].achievements[data].unlocked" v-bind:class="{ [layer]: true, achievement: true, tooltipBox:true, locked: !hasAchievement(layer, data), bought: hasAchievement(layer, data)}"
 			v-bind:style="achievementStyle(layer, data)">
 			<tooltip :text="
-			(tmp[layer].achievements[data].tooltip == '') ? false : hasAchievement(layer, data) ? (tmp[layer].achievements[data].doneTooltip ? tmp[layer].achievements[data].doneTooltip : (tmp[layer].achievements[data].tooltip ? tmp[layer].achievements[data].tooltip : 'You did it!'))
-			: (tmp[layer].achievements[data].goalTooltip ? tmp[layer].achievements[data].goalTooltip : (tmp[layer].achievements[data].tooltip ? tmp[layer].achievements[data].tooltip : 'LOCKED'))
+			(tmp[layer].achievements[data].tooltip == '') ? false : hasAchievement(layer, data) ? (tmp[layer].achievements[data].doneTooltip ? tmp[layer].achievements[data].doneTooltip : (tmp[layer].achievements[data].tooltip ? tmp[layer].achievements[data].tooltip : langData[options.lang].system.normal.achievementDefault))
+			: (tmp[layer].achievements[data].goalTooltip ? tmp[layer].achievements[data].goalTooltip : (tmp[layer].achievements[data].tooltip ? tmp[layer].achievements[data].tooltip : langData[options.lang].system.normal.achievementLockDefault))
 		"></tooltip>
 			<span v-if= "tmp[layer].achievements[data].name"><br><h3 v-bind:style="tmp[layer].achievements[data].textStyle" v-html="tmp[layer].achievements[data].name"></h3><br></span>
 		</div>
@@ -586,14 +586,14 @@ function loadVue() {
 		props: ['layer', 'data'],
 		template: `
 			<button v-if="tmp[layer].buyables && tmp[layer].buyables[data].sellOne && !(tmp[layer].buyables[data].canSellOne !== undefined && tmp[layer].buyables[data].canSellOne == false)" v-on:click="run(tmp[layer].buyables[data].sellOne, tmp[layer].buyables[data])"
-				v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }">{{tmp[layer].buyables.sellOneText ? tmp[layer].buyables.sellOneText : "Sell One"}}</button>
+				v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }">{{tmp[layer].buyables.sellOneText ? tmp[layer].buyables.sellOneText : langData[options.lang].system.normal.sellOne}}</button>
 	`
 	})
 	Vue.component('sell-all', {
 		props: ['layer', 'data'],
 		template: `
 			<button v-if="tmp[layer].buyables && tmp[layer].buyables[data].sellAll && !(tmp[layer].buyables[data].canSellAll !== undefined && tmp[layer].buyables[data].canSellAll == false)" v-on:click="run(tmp[layer].buyables[data].sellAll, tmp[layer].buyables[data])"
-				v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }">{{tmp[layer].buyables.sellAllText ? tmp[layer].buyables.sellAllText : "Sell All"}}</button>
+				v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }">{{tmp[layer].buyables.sellAllText ? tmp[layer].buyables.sellAllText : langData[options.lang].system.normal.sellAll}}</button>
 	`
 	})
 

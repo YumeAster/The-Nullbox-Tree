@@ -4,12 +4,18 @@ addLayer("w", {
     row: 0, // Row the layer is in on the tree (0 is the first row)
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     color: "#c2c2c2",
-    resource: "Word", // Name of prestige currency
+    resource(){ return getLangData("w.resource") }  , // Name of prestige currency
     hotkeys: [
         {key: "w", description: "W: Reset for Word", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
 
-    baseResource: "characters", // Name of resource prestige is based on
+    // 자연스러운 번역
+    objectivePostposition(){ return getLangData("w.objectivePostposition") },
+    assistantPostposition(){ return getLangData("w.assistantPostposition") },
+    nominativePostposition(){ return getLangData("w.nominativePostposition") },
+    companionPostposition(){ return getLangData("w.companionPostposition") },
+
+    baseResource(){ return getLangData("w.baseResource") }, // Name of resource prestige is based on
     baseAmount() { return player.points }, // 기본적으로 해당 레이어에 보여질 재화 식
 
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -47,29 +53,29 @@ addLayer("w", {
 
     upgrades: {
         11: {
-            title: "Welcome Message",
-            description: "Generate 1 character every second.",
+            title(){ return getLangData("w.upgrades.11.title") },
+            description(){ return getLangData("w.upgrades.11.description") },
             cost: new Decimal(1)
         },
         12: {
-            title: "Typing",
-            description: "Double your character gain.",
+            title(){ return getLangData("w.upgrades.12.title") },
+            description(){ return getLangData("w.upgrades.12.description") },
             cost: new Decimal(5),
             unlocked(){
                 return hasUpgrade('w', 11)
             },
         },
         13: {
-            title: "Mechanical Keyboard",
-            description: "Double your word gain.",
+            title(){ return getLangData("w.upgrades.13.title") },
+            description(){ return getLangData("w.upgrades.13.description") },
             cost: new Decimal(10),
             unlocked(){
                 return hasUpgrade('w', 12)
             }
         },
         14: {
-            title: "Typing Practice",
-            description: "Word boost Character generation.",
+            title(){ return getLangData("w.upgrades.14.title") },
+            description(){ return getLangData("w.upgrades.14.description") },
             cost: new Decimal(20),
             unlocked(){
                 return hasUpgrade('w', 13)
@@ -83,27 +89,27 @@ addLayer("w", {
                 eff = eff.pow(exp);
                 return eff;
             },
-            effectDisplay(){ return format(upgradeEffect('w', 14)) + "x"; }
+            effectDisplay(){ return boldText(format(upgradeEffect('w', 14)) + "x"); }
         },
         21: {
-            title: "Fast Typing",
-            description: "Double your word gain, again.",
+            title(){ return getLangData("w.upgrades.21.title") },
+            description(){ return getLangData("w.upgrades.21.description") },
             cost: new Decimal(1000),
             unlocked() {
                 return hasUpgrade('t', 13)
             }
         },
         22: {
-            title: "Typing Master",
-            description: "Change Exponent of <b>Typing Practice</b> 0.25 -> 0.5",
+            title(){ return getLangData("w.upgrades.22.title") },
+            description(){ return getLangData("w.upgrades.22.description") },
             cost: new Decimal(5000),
             unlocked() {
                 return hasUpgrade('t', 13)
             }
         },
         23: {
-            title: "Big Data",
-            description: "Character generation is faster based on your Word upgrade bought.",
+            title(){ return getLangData("w.upgrades.23.title") },
+            description(){ return getLangData("w.upgrades.23.description") },
             cost: new Decimal(7.5e4),
             unlocked(){
                 return hasUpgrade('t', 13)
@@ -117,8 +123,8 @@ addLayer("w", {
             effectDisplay() { return format(upgradeEffect('w', 23)) + "x" }
         },
         24: {
-            title: "Selfmade Disaster",
-            description: "Character boost their own generation.",
+            title(){ return getLangData("w.upgrades.24.title") },
+            description(){ return getLangData("w.upgrades.24.description") },
             cost: new Decimal(1.5e5),
             unlocked(){
                 return hasUpgrade('t', 13)
@@ -128,7 +134,7 @@ addLayer("w", {
                 
                 return eff
             },
-            effectDisplay(){ return format(upgradeEffect('w', 24)) + "x" }
+            effectDisplay(){ return boldText(format(upgradeEffect('w', 24)) + "x") }
         }
     }
 })

@@ -7,7 +7,7 @@ function getStartOptions() {
 		autosave: true,
 		msDisplay: "always",
 		theme: "default",
-		hqTree: false,
+		hqTree: true,
 		offlineProd: true,
 		hideChallenges: false,
 		showStory: true,
@@ -49,6 +49,10 @@ function toggleAuto(toggle) {
 
 function toggleTranslation() {
 	options.lang = LANG[(LANG.indexOf(options.lang) + 1) % LANG.length];
+}
+
+function getLangData(path){
+	return pathIndex(langData[options.lang].layer, path)
 }
 
 const MS_DISPLAYS = ["ALL", "LAST, AUTO, INCOMPLETE", "AUTOMATION, INCOMPLETE", "INCOMPLETE", "NONE"];
