@@ -28,8 +28,10 @@ addLayer("w", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if(hasUpgrade('w', 13)) mult = mult.times(2)
+        if(hasUpgrade('w', 21)) mult = mult.times(2)
         if(player.c.unlocked) mult = mult.times(tmp.c.effect);
         if(hasUpgrade('c', 12)) mult = mult.times(upgradeEffect('c', 12));
+        
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -76,7 +78,15 @@ addLayer("w", {
                 return eff;
             },
             effectDisplay(){ return format(upgradeEffect('w', 14)) + "x"; }
-        }
+        },
+        21: {
+            title: "Too Many Welcomes",
+            description: "Double your word gain, again.",
+            cost: new Decimal(10000),
+            unlocked() {
+                return hasUpgrade('c', 13)
+            }
+        },
     }
 })
 
@@ -158,6 +168,14 @@ addLayer("c", {
                 return eff;
             },
             effectDisplay(){ return format(upgradeEffect('c', 12)) + "x"; }
+        },
+        13: {
+            title: "Additional Keyboard",
+            description: "Unlock 4 new Word upgrade.",
+            cost: new Decimal(5),
+            unlocked(){
+                return hasUpgrade('c', 12);
+            }
         }
     },
 
