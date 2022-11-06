@@ -14,7 +14,7 @@ addLayer("w", {
 
     doReset(resettingLayer) {
         let keep = [];
-        if (hasMilestone("c", 0) && resettingLyaer == "c") keep.push("upgrades");
+        if (hasMilestone("c", 0) && resettingLayer == "c") keep.push("upgrades");
         if (layers[resettingLayer].row > this.row) layerDataReset("w", keep)
     },
 
@@ -24,6 +24,7 @@ addLayer("w", {
         best: new Decimal(0),
         total: new Decimal(0)
     }},
+
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if(hasUpgrade('w', 13)) mult = mult.times(2)
