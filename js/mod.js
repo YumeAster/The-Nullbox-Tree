@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1-Dev",
+	num: "0.1-Dev Build 11",
 	name: "Developing...",
 }
 
@@ -52,7 +52,7 @@ function getPointGen() {
 	if(hasUpgrade('c', 11)) gain = gain.times(upgradeEffect('c', 11)); // Hello!
 	if(hasUpgrade('w', 23)) gain = gain.times(upgradeEffect('w', 23)); // Typing Practice
 	if(hasUpgrade('w', 24)) gain = gain.times(upgradeEffect('w', 24)); // Selfmade Disaster
-	
+
 	if(isDev) gain = gain.times(100);
 
 	return gain
