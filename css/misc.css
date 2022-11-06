@@ -2,7 +2,7 @@
 /* Prestige button */
 .reset {
 	height: 120px;
-	width: 180px;
+	width: 200px;
 	border-radius: 25%;
 	border: 4px solid;
 	border-color: rgba(0, 0, 0, 0.125);
@@ -37,7 +37,7 @@
     margin-bottom: 5px;
     transform: translateX(-50%);
     padding: 7px;
-    font-family: "Lucida Console", "Courier New", monospace;
+    font-family: "Pretendard-Regular", "Courier New", monospace;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
