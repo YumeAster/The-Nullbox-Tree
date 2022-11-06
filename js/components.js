@@ -144,9 +144,9 @@ function loadVue() {
 			<span v-if="layers[layer].challenges[data].fullDisplay" v-html="run(layers[layer].challenges[data].fullDisplay, layers[layer].challenges[data])"></span>
 			<span v-else>
 				<span v-html="tmp[layer].challenges[data].challengeDescription"></span><br>
-				Goal:  <span v-if="tmp[layer].challenges[data].goalDescription" v-html="tmp[layer].challenges[data].goalDescription"></span><span v-else>{{format(tmp[layer].challenges[data].goal)}} {{tmp[layer].challenges[data].currencyDisplayName ? tmp[layer].challenges[data].currencyDisplayName : modInfo.pointsName}}</span><br>
-				Reward: <span v-html="tmp[layer].challenges[data].rewardDescription"></span><br>
-				<span v-if="layers[layer].challenges[data].rewardDisplay!==undefined">Currently: <span v-html="(tmp[layer].challenges[data].rewardDisplay) ? (run(layers[layer].challenges[data].rewardDisplay, layers[layer].challenges[data])) : format(tmp[layer].challenges[data].rewardEffect)"></span></span>
+				{{langData[options.lang].system.challenge.goal}}:  <span v-if="tmp[layer].challenges[data].goalDescription" v-html="tmp[layer].challenges[data].goalDescription"></span><span v-else>{{format(tmp[layer].challenges[data].goal)}} {{tmp[layer].challenges[data].currencyDisplayName ? tmp[layer].challenges[data].currencyDisplayName : modInfo.pointsName}}</span><br>
+				{{langData[options.lang].system.challenge.reward}}: <span v-html="tmp[layer].challenges[data].rewardDescription"></span><br>
+				<span v-if="layers[layer].challenges[data].rewardDisplay!==undefined">{{langData[options.lang].system.normal.currently}}: <span v-html="(tmp[layer].challenges[data].rewardDisplay) ? (run(layers[layer].challenges[data].rewardDisplay, layers[layer].challenges[data])) : format(tmp[layer].challenges[data].rewardEffect)"></span></span>
 			</span>
 			<node-mark :layer='layer' :data='tmp[layer].challenges[data].marked' :offset="20" :scale="1.5"></node-mark></span>
 
@@ -178,8 +178,8 @@ function loadVue() {
 			<span v-else>
 				<span v-if= "tmp[layer].upgrades[data].title"><h3 v-html="tmp[layer].upgrades[data].title"></h3><br></span>
 				<span v-html="tmp[layer].upgrades[data].description"></span>
-				<span v-if="layers[layer].upgrades[data].effectDisplay"><br>Currently: <span v-html="run(layers[layer].upgrades[data].effectDisplay, layers[layer].upgrades[data])"></span></span>
-				<br><br>Cost: {{ formatWhole(tmp[layer].upgrades[data].cost) }} {{(tmp[layer].upgrades[data].currencyDisplayName ? tmp[layer].upgrades[data].currencyDisplayName : tmp[layer].resource)}}
+				<span v-if="layers[layer].upgrades[data].effectDisplay"><br>{langData[options.lang].system.normal.currently}: <span v-html="run(layers[layer].upgrades[data].effectDisplay, layers[layer].upgrades[data])"></span></span>
+				<br><br>{langData[options.lang].system.upgrade.cost}: {{ formatWhole(tmp[layer].upgrades[data].cost) }} {{(tmp[layer].upgrades[data].currencyDisplayName ? tmp[layer].upgrades[data].currencyDisplayName : tmp[layer].resource)}}
 			</span>
 			<tooltip v-if="tmp[layer].upgrades[data].tooltip" :text="tmp[layer].upgrades[data].tooltip"></tooltip>
 
@@ -236,7 +236,7 @@ function loadVue() {
 	Vue.component('main-display', {
 		props: ['layer', 'data'],
 		template: `
-		<div><span v-if="player[layer].points.lt('1e1000')">You have </span><h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{data ? format(player[layer].points, data) : formatWhole(player[layer].points)}}</h2> {{tmp[layer].resource}}<span v-if="layers[layer].effectDescription">, <span v-html="run(layers[layer].effectDescription, layers[layer])"></span></span><br><br></div>
+		<div><span v-if="player[layer].points.lt('1e1000')">{{langData[options.lang].system.normal.baseAmount}} </span><h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{data ? format(player[layer].points, data) : formatWhole(player[layer].points)}}</h2> {{tmp[layer].resource + langData[options.lang].system.normal.baseAmountAfter}}<span v-if="layers[layer].effectDescription">, <span v-html="run(layers[layer].effectDescription, layers[layer])"></span></span><br><br></div>
 		`
 	})
 
@@ -245,11 +245,11 @@ function loadVue() {
 		props: ['layer'],
 		template: `
 		<div style="margin-top: -13px">
-			<span v-if="tmp[layer].baseAmount"><br>You have {{formatWhole(tmp[layer].baseAmount)}} {{tmp[layer].baseResource}}</span>
-			<span v-if="tmp[layer].passiveGeneration"><br>You are gaining {{format(tmp[layer].resetGain.times(tmp[layer].passiveGeneration))}} {{tmp[layer].resource}} per second</span>
+			<span v-if="tmp[layer].baseAmount"><br>{{langData[options.lang].system.normal.baseAmount}} {{formatWhole(tmp[layer].baseAmount)}} {{tmp[layer].baseResource}} {{langData[options.lang].system.normal.baseAmountAfter}}</span>
+			<span v-if="tmp[layer].passiveGeneration"><br>{{langData[options.lang].system.normal.passiveGen}} {{format(tmp[layer].resetGain.times(tmp[layer].passiveGeneration))}} {{tmp[layer].resource}} {{langData[options.lang].system.normal.passiveGenPerSecond}} {{langData[options.lang].system.normal.passiveGenAfter}}</span>
 			<br><br>
-			<span v-if="tmp[layer].showBest">Your best {{tmp[layer].resource}} is {{formatWhole(player[layer].best)}}<br></span>
-			<span v-if="tmp[layer].showTotal">You have made a total of {{formatWhole(player[layer].total)}} {{tmp[layer].resource}}<br></span>
+			<span v-if="tmp[layer].showBest">{{langData[options.lang].system.normal.best}} {{tmp[layer].resource + langData[options.lang].system.normal.bestIs}} {{formatWhole(player[layer].best)}} {{langData[options.lang].system.normal.bestAfter}}<br></span>
+			<span v-if="tmp[layer].showTotal">{{langData[options.lang].system.normal.total}} {{formatWhole(player[layer].total)}} {{tmp[layer].resource}} {{langData[options.lang].system.normal.totalAfter}}<br></span>
 		</div>
 		`
 	})
@@ -309,8 +309,8 @@ function loadVue() {
 		props: ['layer', 'data'],
 		template: `
 			<div v-if="tmp[layer].buyables && tmp[layer].buyables.respec && !(tmp[layer].buyables.showRespec !== undefined && tmp[layer].buyables.showRespec == false)">
-				<div class="tooltipBox respecCheckbox"><input type="checkbox" v-model="player[layer].noRespecConfirm" ><tooltip v-bind:text="'Disable respec confirmation'"></tooltip></div>
-				<button v-on:click="respecBuyables(layer)" v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }" style="margin-right: 18px">{{tmp[layer].buyables.respecText ? tmp[layer].buyables.respecText : "Respec"}}</button>
+				<div class="tooltipBox respecCheckbox"><input type="checkbox" v-model="player[layer].noRespecConfirm" ><tooltip v-bind:text="langData[options.lang].system.normal.respecDisableConfirmation"></tooltip></div>
+				<button v-on:click="respecBuyables(layer)" v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }" style="margin-right: 18px">{{tmp[layer].buyables.respecText ? tmp[layer].buyables.respecText : langData[options.lang].system.normal.respec}}</button>
 			</div>
 			`
 	})
