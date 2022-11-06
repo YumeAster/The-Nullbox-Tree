@@ -1,6 +1,13 @@
 registerLanguage("ko-KR", {
     postposition: true,
     layer: {
+        base: {
+            resource: "글자",
+            objectivePostposition: "를",
+            assistantPostposition: "는",
+            nominativePostposition: "가",
+            companionPostposition: "와",
+        },
         "w": {
             resource: "단어",
             baseResource: "글자",
@@ -43,6 +50,59 @@ registerLanguage("ko-KR", {
                     description: "글자가 자기 자신의<br>생산량을 증가시킵니다",
                 }
             }
+        },
+        "m": {
+            resource: "메시지",
+            baseResource: "단어",
+            objectivePostposition: "를",
+            assistantPostposition: "는",
+            nominativePostposition: "가",
+            companionPostposition: "와",
+
+            effectDescription: "또한 ",
+            effectDescriptionAfter: " 만큼 단어 생산량을 증가시킵니다.",
+
+            upgrades: {
+                11: {
+                    title: "#메인-채팅방",
+                    description: "메시지가 글자의 생산량을 증가시킵니다",
+                },
+                12: {
+                    title: "자동완성",
+                    description: "메시지가 단어의 생산량을 증가시킵니다",
+                },
+                13: {
+                    title: "예비용 키보드",
+                    description: "4개의 새로운 단어<br>업그레이드를 해금합니다",
+                },
+                21: {
+                    title: "마참내!",
+                    description: "가장 많았던 메시지에 따라<br>메시지의 효과를<br>증가시킵니다",
+                },
+                22: {
+                    title: "디스코드 니트로",
+                    description: "메시지의 가격이 글자의<br>양에 비례해 저렴해집니다",
+                },
+                23: {
+                    title: "AI 기반 자동완성",
+                    description: "<b>자동완성</b>의 지수를<br>0.66 → 0.75로<br>변경합니다.",
+                }
+            },
+
+            milestones: {
+                0: {
+                    requirementDescription: "5 메시지",
+                    effectDescription: "초기화 시 글자 업그레이드를 보존합니다."
+                },
+                1: {
+                    requirementDescription: "13 메시지",
+                    effectDescription: "초당 50%의 글자를 획득합니다.",
+                },
+                2: {
+                    requirementDescription: "20 메시지",
+                    effectDescription: "메시지의 최대 구매가 가능해집니다.",
+                }
+            }
         }
     },
     system: {
@@ -57,7 +117,7 @@ registerLanguage("ko-KR", {
         normal: {
             achievementDefault: "해냈어요!",
             achievementLockDefault: "잠김",
-            aboveBaseEffect: ". ",
+            aboveBaseEffect: "",
             baseAmount: "현재",
             baseAmountAfter: " 보유중입니다.",
             best: "가장 많았던",
@@ -87,6 +147,31 @@ registerLanguage("ko-KR", {
         },
         upgrade: {
             cost: "가격",
-        }
+        },
+        settings: {
+            0: {
+                0: "저장",
+                1: "자동저장",
+                2: "공장 초기화",
+            },
+            1: {
+                0: "내보내기",
+                1: "불러오기",
+                2: "오프라인 진행",
+            },
+            2: {
+                0: "테마",
+                1: "마일스톤",
+                2: "고화질 트리",
+            },
+            3: {
+                0: "완료한 도전",
+                1: "단일 탭 모드",
+                2: "Shift-클릭으로 툴팁 전환",
+            },
+            4: {
+                0: "언어"
+            }
+        },
     }
 })

@@ -24,7 +24,7 @@ addLayer("w", {
 
     doReset(resettingLayer) {
         let keep = [];
-        if (hasMilestone('t', 0) && resettingLayer == "c") keep.push("upgrades");
+        if (hasMilestone('m', 0) && resettingLayer == 'm') keep.push("upgrades");
         if (layers[resettingLayer].row > this.row) layerDataReset("w", keep)
     },
 
@@ -39,8 +39,8 @@ addLayer("w", {
         mult = new Decimal(1)
         if(hasUpgrade('w', 13)) mult = mult.times(2)
         if(hasUpgrade('w', 21)) mult = mult.times(2)
-        if(player.t.unlocked) mult = mult.times(tmp.t.effect);
-        if(hasUpgrade('t', 12)) mult = mult.times(upgradeEffect('t', 12));
+        if(player.m.unlocked) mult = mult.times(tmp.m.effect);
+        if(hasUpgrade('m', 12)) mult = mult.times(upgradeEffect('m', 12));
         
         return mult
     },
@@ -49,7 +49,7 @@ addLayer("w", {
     },
     layerShown(){ return true },
 
-    passiveGeneration() { return hasMilestone('t', 1) ? 0.5 : 0},
+    passiveGeneration() { return hasMilestone('m', 1) ? 0.5 : 0},
 
     upgrades: {
         11: {
@@ -96,7 +96,7 @@ addLayer("w", {
             description(){ return getLangData("w.upgrades.21.description") },
             cost: new Decimal(1000),
             unlocked() {
-                return hasUpgrade('t', 13)
+                return hasUpgrade('m', 13)
             }
         },
         22: {
@@ -104,7 +104,7 @@ addLayer("w", {
             description(){ return getLangData("w.upgrades.22.description") },
             cost: new Decimal(5000),
             unlocked() {
-                return hasUpgrade('t', 13)
+                return hasUpgrade('m', 13)
             }
         },
         23: {
@@ -112,7 +112,7 @@ addLayer("w", {
             description(){ return getLangData("w.upgrades.23.description") },
             cost: new Decimal(7.5e4),
             unlocked(){
-                return hasUpgrade('t', 13)
+                return hasUpgrade('m', 13)
             },
             effect() {
                 let eff = new Decimal(1.5)
@@ -127,7 +127,7 @@ addLayer("w", {
             description(){ return getLangData("w.upgrades.24.description") },
             cost: new Decimal(1.5e5),
             unlocked(){
-                return hasUpgrade('t', 13)
+                return hasUpgrade('m', 13)
             },
             effect() {
                 let eff = player.points.plus(1).log10().pow(0.8).plus(1)
