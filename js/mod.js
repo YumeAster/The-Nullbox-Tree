@@ -3,7 +3,8 @@ let modInfo = {
 	id: "nbx",
 	author: "NepleDev",
 	pointsName: "characters",
-	modFiles: ["layer.js", "tree.js"],
+	modFiles: ["./layers/row01/word.js", "./layers/row02/text.js", "tree.js"],
+	langFiles: ["en-US", "ko-KR"],
 
 	discordName: "",
 	discordLink: "",
@@ -49,7 +50,7 @@ function getPointGen() {
 	let gain = new Decimal(1)
 	if(hasUpgrade('w', 12)) gain = gain.times(2) // Fast Typing
 	if(hasUpgrade('w', 14)) gain = gain.times(upgradeEffect('w', 14)); // Autocomplete
-	if(hasUpgrade('c', 11)) gain = gain.times(upgradeEffect('c', 11)); // Hello!
+	if(hasUpgrade('t', 11)) gain = gain.times(upgradeEffect('t', 11)); // Hello!
 	if(hasUpgrade('w', 23)) gain = gain.times(upgradeEffect('w', 23)); // Typing Practice
 	if(hasUpgrade('w', 24)) gain = gain.times(upgradeEffect('w', 24)); // Selfmade Disaster
 

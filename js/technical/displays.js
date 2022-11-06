@@ -32,7 +32,7 @@ function challengeStyle(layer, id) {
 }
 
 function challengeButtonText(layer, id) {
-    return (player[layer].activeChallenge==(id)?(canCompleteChallenge(layer, id)?"Finish":"Exit Early"):(hasChallenge(layer, id)?"Completed":"Start"))
+    return (player[layer].activeChallenge==(id)?(canCompleteChallenge(layer, id)?langData[options.lang].system.challenge.finish:langData[options.lang].system.challenge.exitEarly):(hasChallenge(layer, id)?langData[options.lang].system.challenge.completed:langData[options.lang].system.challenge.start))
 
 }
 
