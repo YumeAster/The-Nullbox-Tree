@@ -34,8 +34,10 @@ addLayer("e", {
         thinking: new Decimal(0),
     }},
 
+    // Gain
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if(hasUpgrade('e', 21)) mult = mult.div(upgradeEffect('e', 21));
 
         return mult
     },
@@ -58,20 +60,23 @@ addLayer("e", {
         return eff;
     },
 
-    effectMult() {
-        let eff = new Decimal(1)
-
-        return eff
-    },
-
     effectExp() {
         let eff = new Decimal(1)
 
         return eff;
     },
 
+    effectMult() {
+        let eff = new Decimal(1)
+
+        if(hasUpgrade('e', 12)) eff = eff.times(upgradeEffect('e', 12))
+
+        return eff
+    },
+
+
     effect(){
-        return this.effectBase().times(this.effectMult()).pow(this.effectExp());
+        return this.effectBase().pow(this.effectExp()).times(this.effectMult());
     },
 
     // Thinking (🤔)
@@ -124,16 +129,68 @@ addLayer("e", {
             }
         ],
         "blank",
+        "milestones",
+        "blank",
         "upgrades",
     ],
 
     // Upgrades
     upgrades: {
+        11: {
+            title(){ return getLangData("e.upgrades.11.title") },
+            description(){ return getLangData("e.upgrades.11.description") },
+            cost: new Decimal(2),
+            unlocked(){
+                return player.e.unlocked;
+            },
+            effect() {
+                let eff = new Decimal(0.01).times(player.e.points)
+                
+                return eff;
+            },
+            effectDisplay(){ return boldText("+" + format(upgradeEffect('e', 11), 2)); }
+        },
+        12: {
+            title(){ return getLangData("e.upgrades.12.title") },
+            description(){ return getLangData("e.upgrades.12.description") },
+            cost: new Decimal(3),
+            unlocked(){
+                return hasUpgrade('e', 11);
+            },
+            effect() {
+                let eff = new Decimal(1.5).pow(player.e.points)
 
+                return eff;
+            },
+            effectDisplay(){ return boldText(format(upgradeEffect('e', 12)) + "x"); }
+        },
+        13: {
+            title(){ return getLangData("e.upgrades.13.title") },
+            description(){ return getLangData("e.upgrades.13.description") },
+            cost: new Decimal(4),
+            unlocked(){ return hasUpgrade('e', 12) }
+        },
+        21: {
+            title(){ return getLangData("e.upgrades.21.title") },
+            description(){ return getLangData("e.upgrades.21.description") },
+            cost: new Decimal(9),
+            unlocked(){ return hasUpgrade('e', 13) },
+            effect() {
+                let eff = player.e.thinking.add(1).log10().add(1).pow(4.5)
+
+                return eff;
+            },
+            effectDisplay() { return boldText("/ " + format(upgradeEffect('e', 21))) }
+        }
     },
 
     // Milestones
     milestones: {
-
+        0: {
+            requirementDescription() { return getLangData("e.milestones.0.requirementDescription") },
+            effectDescription() { return getLangData("e.milestones.0.effectDescription") },
+            done(){ return player.e.best.gte(9) },
+            unlocked(){ return player.e.unlocked; }
+        },
     }
 })

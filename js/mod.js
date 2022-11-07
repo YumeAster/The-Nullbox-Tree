@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1-Dev Build 11",
+	num: "0.1-Dev Build 13",
 	name: "Developing...",
 }
 
@@ -62,6 +62,7 @@ function getPointGen() {
 
 	// Exponent
 	let exp = new Decimal(1)
+	if(hasUpgrade('w', 33)) exp = exp.times(1.2)
 
 	if(isDev) mult = mult.times(100);
 
