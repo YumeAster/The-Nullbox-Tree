@@ -1,6 +1,9 @@
 registerLanguage("en-US", {
     postposition: false,
     layer: {
+        base: {
+            resource: "Characters",
+        },
         "w": {
             resource: "Word",
             baseResource: "Character",
@@ -37,7 +40,24 @@ registerLanguage("en-US", {
                 24: {
                     title: "Selfmade Disaster",
                     description: "Character boost their own generation.",
-                }
+                },
+                31: {
+                    title: "Copy & Paste",
+                    description: "Triple your word gain.",
+                },
+                32: {
+                    title: "Othermade Disaster",
+                    description: "Change Exponent of <b>Selfmade Disaster</b> 0.8 → 1.0",
+                },
+                33: {
+                    title: "Chat Overwhelming",
+                    description: "Character gain is raised to the<br>power of 1.2",
+                },
+                34: {
+                    title: "Typing Legend",
+                    description: "Change Exponent of <b>Typing Practice</b><br>",
+                    descriptionAfter: " → 0.75"
+                },
             }
         },
         "m": {
@@ -77,7 +97,7 @@ registerLanguage("en-US", {
             milestones: {
                 0: {
                     requirementDescription: "5 Messages",
-                    effectDescription: "Keep WOrd Upgrades on reset."
+                    effectDescription: "Keep Word Upgrades on Message reset."
                 },
                 1: {
                     requirementDescription: "13 Messages",
@@ -88,6 +108,49 @@ registerLanguage("en-US", {
                     effectDescription: "You can buy max Messages.",
                 }
             }
+        },
+        "e": {
+            resource: "Emoji",
+            baseResource: "Word",
+
+            effectDescription: "which are generate ",
+            effectDescriptionAfter: " 🤔/s",
+
+            thinking: {
+                resource: "🤔",
+                resourceDisplay: "You have",
+                resourceDisplayAfter: "",
+
+                effectDescription: ", which boosts Character generation by ",
+                effectDescriptionAfter:"",
+            },
+
+            upgrades: {
+                11: {
+                    title: "👋",
+                    description: "Emojies increase Message effect base."
+                },
+                12: {
+                    title: "😃🚀🤔",
+                    description: "Emojies boost 🤔 generation.",
+                },
+                13: {
+                    title: "🔓📃🔺4️⃣",
+                    description: "Unlock 4 new Word upgrades."
+                },
+                21: {
+                    title: "🤔➗😃💳",
+                    description: "Emojies are cheaper based on your 🤔."
+                }
+            },
+
+            milestones: {
+                0: {
+                    requirementDescription: "9 Emojies",
+                    effectDescription: "Keep Word upgrades on Emoji reset."
+                }
+            }
+            
         }
     },
     system: {
@@ -112,7 +175,7 @@ registerLanguage("en-US", {
             currently: "Currently",
             passiveGen: "You are gaining",
             passiveGenAfter: "",
-            passiveGenPerSecond: "per second",
+            passiveGenPerSecond: " per second",
             respec: "Respec",
             respecDisableConfirmation: "Disable respec confirmation",
             sellAll: "Sell All",

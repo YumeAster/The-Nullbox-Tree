@@ -53,8 +53,15 @@ addLayer("m", {
     canBuyMax(){ return hasMilestone('m', 2) }, 
 
     effect(){
-        let eff = new Decimal(1.125).pow(player.m.points)
+        let eff = new Decimal(1.125)
+        
+        // Base
+        if(player.e.unlocked) eff = eff.add(upgradeEffect('e', 11))
 
+        // Exponent
+        eff = eff.pow(player.m.points)
+
+        // Mult
         eff = eff.times(upgradeEffect('m', 21))
         
         return eff;
@@ -128,7 +135,7 @@ addLayer("m", {
 
                 return eff
             },
-            effectDisplay(){ return boldText("/" + format(upgradeEffect('m', 22)))},
+            effectDisplay(){ return boldText("/ " + format(upgradeEffect('m', 22))) },
             unlocked(){
                 return hasUpgrade('m', 13)
             }

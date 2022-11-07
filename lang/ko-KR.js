@@ -48,7 +48,24 @@ registerLanguage("ko-KR", {
                 24: {
                     title: "스불재",
                     description: "글자가 자기 자신의<br>생산량을 증가시킵니다",
-                }
+                },
+                31: {
+                    title: "복사 & 붙여넣기",
+                    description: "단어 획득량을<br>3배로 늘립니다.",
+                },
+                32: {
+                    title: "타불재",
+                    description: "<b>스불재</b>의 지수를<br>0.8 → 1.0으로<br>변경합니다.",
+                },
+                33: {
+                    title: "압도적인 채팅",
+                    description: "글자 획득량이<br>1.2제곱 증가합니다.",
+                },
+                34: {
+                    title: "타자신",
+                    description: "<b>타자 연습</b>의 지수를<br>",
+                    descriptionAfter: " → 0.75로<br>변경합니다."
+                },
             }
         },
         "m": {
@@ -92,7 +109,7 @@ registerLanguage("ko-KR", {
             milestones: {
                 0: {
                     requirementDescription: "5 메시지",
-                    effectDescription: "초기화 시 글자 업그레이드를 보존합니다."
+                    effectDescription: "메시지 초기화 시 글자 업그레이드를 보존합니다."
                 },
                 1: {
                     requirementDescription: "13 메시지",
@@ -103,6 +120,55 @@ registerLanguage("ko-KR", {
                     effectDescription: "메시지의 최대 구매가 가능해집니다.",
                 }
             }
+        },
+        "e": {
+            resource: "이모지",
+            baseResource: "글자",
+
+            objectivePostposition: "를",
+            assistantPostposition: "는",
+            nominativePostposition: "가",
+            companionPostposition: "와",
+
+            effectDescription: "또한 초당 ",
+            effectDescriptionAfter: " 🤔을 생성합니다.",
+
+            thinking: {
+                resource: "🤔",
+
+                resourceDisplay: "현재 ",
+                resourceDisplayAfter: "을 보유중이며, ",
+
+                effectDescription: " 글자 생산량이 ",
+                effectDescriptionAfter:" 증가합니다.",
+            },
+
+            upgrades: {
+                11: {
+                    title: "👋",
+                    description: "이모지가 메시지 효과의<br>밑을 증가시킵니다."
+                },
+                12: {
+                    title: "😃🚀🤔",
+                    description: "이모지가 🤔 생산량을<br>증가시킵니다.",
+                },
+                13: {
+                    title: "🔓📃🔺4️⃣",
+                    description: "4개의 새로운 단어<br>업그레이드를 해금합니다"
+                },
+                21: {
+                    title: "🤔➗😃💳",
+                    description: "이모지의 가격이<br>🤔의 양에 비례해<br>저렴해집니다."
+                }
+            },
+
+            milestones: {
+                0: {
+                    requirementDescription: "9 이모지",
+                    effectDescription: "이모지 초기화 시 글자 업그레이드를 보존합니다."
+                }
+            }
+            
         }
     },
     system: {
