@@ -7,13 +7,14 @@ function getStartOptions() {
 		autosave: true,
 		msDisplay: "always",
 		theme: "default",
-		hqTree: false,
+		hqTree: true,
 		offlineProd: true,
 		hideChallenges: false,
 		showStory: true,
 		forceOneTab: false,
 		oldStyle: false,
 		tooltipForcing: true,
+		lang: "en-US"
 	}
 }
 
@@ -46,9 +47,24 @@ function toggleAuto(toggle) {
 	needCanvasUpdate=true
 }
 
+function toggleTranslation() {
+	options.lang = LANG[(LANG.indexOf(options.lang) + 1) % LANG.length];
+}
+
+function getLangData(path){
+	return pathIndex(langData[options.lang].layer, path)
+}
+
 const MS_DISPLAYS = ["ALL", "LAST, AUTO, INCOMPLETE", "AUTOMATION, INCOMPLETE", "INCOMPLETE", "NONE"];
 
 const MS_SETTINGS = ["always", "last", "automation", "incomplete", "never"];
+
+const LANG = ["en-US", "ko-KR"]
+
+const LANG_DISPLAY = {
+	"en-US" : "English",
+	"ko-KR" : "Korean"
+}
 
 function adjustMSDisp() {
 	options.msDisplay = MS_SETTINGS[(MS_SETTINGS.indexOf(options.msDisplay) + 1) % 5];
