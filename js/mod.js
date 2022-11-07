@@ -3,7 +3,7 @@ let modInfo = {
 	id: "nbx",
 	author: "NepleDev",
 
-	modFiles: ["./layers/row01/word.js", "./layers/row02/message.js", "tree.js"],
+	modFiles: ["layers/row01/word.js", "layers/row02/message.js", "layers/row02/emoji.js", "tree.js"],
 	langFiles: ["en-US", "ko-KR"],
 
 	discordName: "",
@@ -48,15 +48,24 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+
+	// Multiply
+	let mult = new Decimal(1)
+	// Multiply - Layer Effect
+	if(player.e.unlocked) gain = gain.times(tmp.e.thinkingEff)
+	// Multiply - Upgrade
 	if(hasUpgrade('w', 12)) gain = gain.times(2) // Fast Typing
 	if(hasUpgrade('w', 14)) gain = gain.times(upgradeEffect('w', 14)); // Autocomplete
 	if(hasUpgrade('m', 11)) gain = gain.times(upgradeEffect('m', 11)); // Hello!
 	if(hasUpgrade('w', 23)) gain = gain.times(upgradeEffect('w', 23)); // Typing Practice
 	if(hasUpgrade('w', 24)) gain = gain.times(upgradeEffect('w', 24)); // Selfmade Disaster
 
-	if(isDev) gain = gain.times(100);
+	// Exponent
+	let exp = new Decimal(1)
 
-	return gain
+	if(isDev) mult = mult.times(100);
+
+	return gain.times(mult).pow(exp)
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values

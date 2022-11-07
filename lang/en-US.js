@@ -1,6 +1,9 @@
 registerLanguage("en-US", {
     postposition: false,
     layer: {
+        base: {
+            resource: "Characters",
+        },
         "w": {
             resource: "Word",
             baseResource: "Character",
@@ -77,7 +80,7 @@ registerLanguage("en-US", {
             milestones: {
                 0: {
                     requirementDescription: "5 Messages",
-                    effectDescription: "Keep WOrd Upgrades on reset."
+                    effectDescription: "Keep Word Upgrades on reset."
                 },
                 1: {
                     requirementDescription: "13 Messages",
@@ -88,6 +91,23 @@ registerLanguage("en-US", {
                     effectDescription: "You can buy max Messages.",
                 }
             }
+        },
+        "e": {
+            resource: "Emoji",
+            baseResource: "Word",
+
+            effectDescription: "which are generate ",
+            effectDescriptionAfter: " 🤔/s",
+
+            thinking: {
+                resource: "🤔",
+                resourceDisplay: "You have",
+                resourceDisplayAfter: "",
+
+                effectDescription: ", which boosts Character generation by ",
+                effectDescriptionAfter:"",
+            },
+            
         }
     },
     system: {
@@ -112,7 +132,7 @@ registerLanguage("en-US", {
             currently: "Currently",
             passiveGen: "You are gaining",
             passiveGenAfter: "",
-            passiveGenPerSecond: "per second",
+            passiveGenPerSecond: " per second",
             respec: "Respec",
             respecDisableConfirmation: "Disable respec confirmation",
             sellAll: "Sell All",
