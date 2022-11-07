@@ -14,13 +14,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1-Dev Build 13",
-	name: "Developing...",
+	num: "0.0.1",
+	name: "Start of Nullbox",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1-Dev</h3><br>
-		- Just Dev Version.<br>`
+	<h3>v0.0.1 - Start of Nullbox</h3><br>
+		주요 기능 / Main Features<br>
+		- Word, Message, Emoji Layer and many upgrades!<br>
+		  Word, Message, Emoji 레이어와 많은 업그레이드들!<br>
+		  
+		- Current Endgame : 9 Emojies & All Upgrades Bought<br>
+		  현재 엔드게임 : 9 이모지 & 모든 업그레이드 구매<br>`
 
 let winText = `Congratulation! You finally win NORAN MINUS`
 
